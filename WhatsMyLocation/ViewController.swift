@@ -7,19 +7,44 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var location: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func locationPressed(_ sender: UIButton) {
+        
+        // api call here
+        
+        Alamofire.request("https://freegeoip.net/json/", method: .get).responseJSON { (response) in
+            
+            switch response.result {
+                
+            case .success( _):
+                print("success")
+                print(response.result.value!)
+                
+                let json = JSON(response.result.value!)
+                
+                let city = json["city"].stringValue
+                let state = json["region_name"].stringValue
+                
+                self.location.text = "You live in " + city + ", " + state
+                
+                
+            case .failure( _):
+                print("failure")
+            }
+        }
     }
-
 
 }
 

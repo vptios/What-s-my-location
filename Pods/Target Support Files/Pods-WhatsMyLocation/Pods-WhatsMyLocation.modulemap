@@ -1,0 +1,6 @@
+framework module Pods_WhatsMyLocation {
+  umbrella header "Pods-WhatsMyLocation-umbrella.h"
+
+  export *
+  module * { export * }
+}
